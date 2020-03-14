@@ -2,15 +2,18 @@ $( document ).ready(function() {
     console.log( "ready!" );
 
 //moment
-var momentTime = moment().format('MMMM Do YYYY, h:mm:ss a');
+var momentTime = moment().format("MMMM Do YYYY, h:mm:ss a");
 console.log(momentTime);
 
 //variables
-var APIKey = 'e885fd3db621744dfef49f4c1e174dc6';
-var submitCity = $('#submit-city');
-var cityHistory = $('city-history');
-var currentWeather = $('#current-weather');
-var fiveDay = $('#five-day');
+var APIKey = "e885fd3db621744dfef49f4c1e174dc6";
+var submitCity = $("#submit-city");
+var cityHistory = $("#city-history");
+var currentWeather = $("#current-weather");
+var fiveDay = $("#five-day");
+// var searchHistory = [];
+var keepHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+
 
 
 function getCurrentWeather() {
@@ -23,7 +26,7 @@ $.ajax({
     url: queryURL,
     method: "GET"
   })
-    // Store all of the retrieved data inside of an object called "response"
+    
     .then(function(weatherData) {
         
         console.log(weatherData);
@@ -33,11 +36,22 @@ $.ajax({
 
 }
 
-submitCity.on('click', function(event) {
+submitCity.on("click", function(event) {
     event.preventDefault();
+    var cityInput = $("#cityInput").val().trim();
 
+
+    
+
+    keepHistory.push(cityInput);
+
+    // may need to put this in separate function that dynamically generates city input
+    localStorage.setItem("searchHistory", JSON.stringify(cityInput));
 
     console.log(cityInput);
+    console.log(keepHistory);
+
+    cityHistory.append(cityInput);
 
 
     getCurrentWeather();
