@@ -1,5 +1,4 @@
 $( document ).ready(function() {
-    console.log( "ready!" );
 
 //moment
 var momentTime = moment().format("MMMM Do YYYY, h:mm:ss a");
@@ -11,8 +10,8 @@ var submitCity = $("#submit-city");
 var cityHistory = $("#city-history");
 var currentWeather = $("#current-weather");
 var fiveDay = $("#five-day");
-// var searchHistory = [];
-var keepHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+var searchHistory = [];
+// var keepHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
 
 
@@ -38,20 +37,22 @@ $.ajax({
 
 submitCity.on("click", function(event) {
     event.preventDefault();
+    var newDiv = $("<div>");
     var cityInput = $("#cityInput").val().trim();
+    newDiv.text(cityInput);
 
 
     
 
-    keepHistory.push(cityInput);
+    searchHistory.push(cityInput);
 
     // may need to put this in separate function that dynamically generates city input
-    localStorage.setItem("searchHistory", JSON.stringify(cityInput));
+    // localStorage.setItem("searchHistory", JSON.stringify(cityInput));
 
     console.log(cityInput);
-    console.log(keepHistory);
+    console.log(searchHistory);
 
-    cityHistory.append(cityInput);
+    cityHistory.append(newDiv);
 
 
     getCurrentWeather();
