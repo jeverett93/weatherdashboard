@@ -10,8 +10,8 @@ var submitCity = $("#submit-city");
 var cityHistory = $("#city-history");
 var currentWeather = $("#current-weather");
 var fiveDay = $("#five-day");
-var searchHistory = [];
-// var keepHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+var searchHistory = JSON.parse(localStorage.getItem("searchHistory") || []);
+// var keepHistory = JSON.parse(localStorage.getItem("searchHistory") || searchHistory);
 
 
 
@@ -47,12 +47,11 @@ submitCity.on("click", function(event) {
     searchHistory.push(cityInput);
 
     // may need to put this in separate function that dynamically generates city input
-    // localStorage.setItem("searchHistory", JSON.stringify(cityInput));
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 
-    console.log(cityInput);
     console.log(searchHistory);
 
-    cityHistory.append(newDiv);
+    cityHistory.prepend(newDiv);
 
 
     getCurrentWeather();
