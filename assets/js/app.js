@@ -10,7 +10,7 @@ var cityHistory = $("#city-history");
 var currentWeather = $("#current-weather");
 var fiveDay = $("#five-day");
 var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
-// var keepHistory = JSON.parse(localStorage.getItem("searchHistory") || searchHistory);
+
 
 function loadHistory() {
     for (var i = 0; i < searchHistory.length; i++) {
@@ -34,11 +34,37 @@ $.ajax({
     
     .then(function(weatherData) {
         
-        console.log(weatherData);
-        console.log(queryURL);
-        
+
+        var farenTemp = Math.floor((weatherData.main.temp - 273.15) * 1.8 + 32);
+        var feelsLike = Math.floor((weatherData.main.feels_like - 273.15) * 1.8 + 32);
+
+        $('<h3>').text("City: " + weatherData.name).appendTo(currentWeather)
+        $('<h3>').text("Date: " + momentTime).appendTo(currentWeather)
+        $('<h3>').text("Current Temperature (F): " + farenTemp).appendTo(currentWeather)
+        $('<h3>').text("Feels Like: " + feelsLike).appendTo(currentWeather)
+        $('<h3>').text("Humidity: " + weatherData.main.humidity + "%").appendTo(currentWeather)
+        $('<h3>').text("Wind Speed: " + weatherData.wind.speed + " mph").appendTo(currentWeather)
+
+        var lat = weatherData.coord.lat;
+        var lon = weatherData.coord.lon;
+
+        //Adds the UV Index to current weather
+        var queryURL2 = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + lon;
+        $.ajax({
+            url: queryURL2,
+            method: "GET"
+          })
+            // We store all of the retrieved data inside of an object called "response"
+            .then(function(moreData) {
+                console.log(moreData);
+                $('<h3>').text("UV Index: " + moreData.value).appendTo(currentWeather);
+
+            });
+
 
     });
+
+
 
 }
 
@@ -53,10 +79,8 @@ submitCity.on("click", function(event) {
 
     searchHistory.push(cityInput);
 
-    // may need to put this in separate function that dynamically generates city input
+   
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
-
-    console.log(searchHistory);
 
 
     cityHistory.prepend(newDiv);
