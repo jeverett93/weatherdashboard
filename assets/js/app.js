@@ -16,16 +16,34 @@ function loadHistory() {
     for (var i = 0; i < searchHistory.length; i++) {
         var historyDivs = $('<div>');
         historyDivs.text(searchHistory[i]);
+        historyDivs.attr("data-city", searchHistory[i]);
+        historyDivs.addClass("saved-city");
         historyDivs.appendTo(cityHistory);
     }
 }
 
+function getForecast (city){
+    // var queryURL = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+ city + "&appid=" + APIKey;
+    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=5&appid=" + APIKey + "&units=imperial"
+    console.log(queryURL)
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+        
+        .then(function(forecastData){
+            console.log(forecastData);
+            // map out forecast data similar to function below
+            // empty div
+        })
+};
 
-function getCurrentWeather() {
-    var cityInput = $('#cityInput').val().trim();
+
+function getCurrentWeather(city) {
+    var cityInput = city || $('#cityInput').val().trim();
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityInput + "&appid=" + APIKey;
-
+    console.log(queryURL)
   // Running AJAX call to the OpenWeatherMap API
 $.ajax({
     url: queryURL,
@@ -34,9 +52,11 @@ $.ajax({
     
     .then(function(weatherData) {
         
-
+        console.log(weatherData);
         var farenTemp = Math.floor((weatherData.main.temp - 273.15) * 1.8 + 32);
         var feelsLike = Math.floor((weatherData.main.feels_like - 273.15) * 1.8 + 32);
+
+        currentWeather.empty();
 
         $('<h3>').text("City: " + weatherData.name).appendTo(currentWeather)
         $('<h3>').text("Date: " + momentTime).appendTo(currentWeather)
@@ -58,22 +78,23 @@ $.ajax({
             .then(function(moreData) {
                 console.log(moreData);
                 $('<h3>').text("UV Index: " + moreData.value).appendTo(currentWeather);
-
+                getForecast(cityInput);
             });
-
+        
 
     });
 
 
 
-}
+};
 
 submitCity.on("click", function(event) {
     event.preventDefault();
     var newDiv = $("<div>");
     var cityInput = $("#cityInput").val().trim();
     newDiv.text(cityInput);
-
+    newDiv.attr("data-city", cityInput);
+    newDiv.addClass("saved-city");
 
     
 
@@ -88,6 +109,11 @@ submitCity.on("click", function(event) {
 
     getCurrentWeather();
 });
+
+$(document).on("click", ".saved-city", function(){
+    var city = $(this).attr("data-city")
+    getCurrentWeather(city);
+})
 
 $( document ).ready(function() {
     loadHistory();
