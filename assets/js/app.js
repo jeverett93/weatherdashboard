@@ -18,7 +18,7 @@ function loadHistory() {
         historyDivs.text(searchHistory[i]);
         historyDivs.attr("data-city", searchHistory[i]);
         historyDivs.addClass("saved-city");
-        historyDivs.appendTo(cityHistory);
+        historyDivs.prependTo(cityHistory);
     }
 }
 
@@ -33,8 +33,20 @@ function getForecast (city){
         
         .then(function(forecastData){
             console.log(forecastData);
-            // map out forecast data similar to function below
-            // empty div
+            // not working yet
+            for (var i = 0; i < forecastData.list.length; i++){
+                var farenTemp = Math.floor((forecastData.list.main.temp - 273.15) * 1.8 + 32);
+                var feelsLike = Math.floor((forecastData.list.main.feels_like - 273.15) * 1.8 + 32);
+                // fiveDay.empty();
+                $('<h3>').text("Date: " + forecastData.list.dt).appendTo(fiveDay)
+                // $('<h3>').text("City: " + weatherData.name).appendTo(fiveDay)
+                $('<h3>').text("Current Temperature (F): " + farenTemp).appendTo(fiveDay)
+                $('<h3>').text("Feels Like: " + feelsLike).appendTo(fiveDay)
+                $('<h3>').text("Humidity: " + forecastData.list.main.humidity + "%").appendTo(fiveDay)
+                $('<h3>').text("Wind Speed: " + forecastData.list.wind.speed + " mph").appendTo(fiveDay)
+            }
+            
+            
         })
 };
 
