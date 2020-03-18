@@ -67,6 +67,7 @@ $.ajax({
         var feelsLike = Math.floor((weatherData.main.feels_like - 273.15) * 1.8 + 32);
 
         currentWeather.empty();
+        
 
         $('<h3>').text("City: " + weatherData.name).appendTo(currentWeather)
         $('<h3>').text("Date: " + momentTime).appendTo(currentWeather)
