@@ -1,6 +1,6 @@
 
 //moment
-var momentTime = moment().format("MMMM Do YYYY, h:mm:ss a");
+var momentTime = moment().format("MMMM Do YYYY");
 console.log(momentTime);
 
 //variables
@@ -34,16 +34,14 @@ function getForecast (city){
         .then(function(forecastData){
             console.log(forecastData);
             // not working yet
-            for (var i = 0; i < forecastData.list.length; i++){
-                var farenTemp = Math.floor((forecastData.list.main.temp - 273.15) * 1.8 + 32);
-                var feelsLike = Math.floor((forecastData.list.main.feels_like - 273.15) * 1.8 + 32);
+            for (var j = 0; j < 5; j++){
+                var farenTemp = Math.floor((forecastData.list[j].main.temp));
+                var fiveDayDate = moment().add(j + 1, "day").format("MMMM Do YYYY");
+                var newerDiv = $("<div>")
                 // fiveDay.empty();
-                $('<h3>').text("Date: " + forecastData.list.dt).appendTo(fiveDay)
-                // $('<h3>').text("City: " + weatherData.name).appendTo(fiveDay)
-                $('<h3>').text("Current Temperature (F): " + farenTemp).appendTo(fiveDay)
-                $('<h3>').text("Feels Like: " + feelsLike).appendTo(fiveDay)
-                $('<h3>').text("Humidity: " + forecastData.list.main.humidity + "%").appendTo(fiveDay)
-                $('<h3>').text("Wind Speed: " + forecastData.list.wind.speed + " mph").appendTo(fiveDay)
+                $('<div>').text("Date: " + fiveDayDate).appendTo(fiveDay);
+                $('<div>').text("Current Temperature (F): " + farenTemp).appendTo(fiveDay);
+                $('<div>').text("Humidity: " + forecastData.list[j].main.humidity + "%").appendTo(fiveDay);
             }
             
             
