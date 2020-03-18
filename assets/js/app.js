@@ -10,6 +10,8 @@ var cityHistory = $("#city-history");
 var currentWeather = $("#current-weather");
 var fiveDay = $("#five-day");
 var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+var city = "" || searchHistory[0];
+getForecast(getCurrentWeather(city));
 
 // function for page to hold search history
 function loadHistory() {
@@ -18,7 +20,7 @@ function loadHistory() {
         historyDivs.text(searchHistory[i]);
         historyDivs.attr("data-city", searchHistory[i]);
         historyDivs.addClass("saved-city");
-        historyDivs.prependTo(cityHistory);
+        historyDivs.appendTo(cityHistory);
     }
 }
 
@@ -146,7 +148,7 @@ submitCity.on("click", function(event) {
 
     
 
-    searchHistory.push(cityInput);
+    searchHistory.unshift(cityInput);
 
    
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
