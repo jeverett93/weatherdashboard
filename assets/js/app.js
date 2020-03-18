@@ -33,6 +33,8 @@ function getForecast (city){
         
         .then(function(forecastData){
             console.log(forecastData);
+
+            fiveDay.empty();
             
             for (var j = 0; j < 5; j++){
                 var farenTemp = Math.floor((forecastData.list[j].main.temp));
@@ -43,7 +45,7 @@ function getForecast (city){
                 var cardIcon = $('<img class="images" src ="https://openweathermap.org/img/wn/' + forecastData.list[j].weather[0].icon + '@2x.png"/>')
                 cardIcon.appendTo(cardBody);
 
-                fiveDay.empty();
+               
                 $('<p class="card-text">').text(fiveDayDate).appendTo(cardBody);
                 $('<p class="card-text">').text("Temperature (F): " + farenTemp).appendTo(cardBody);
                 $('<p class="card-text">').text("Humidity: " + forecastData.list[j].main.humidity + " %").appendTo(cardBody);
