@@ -23,8 +23,7 @@ function loadHistory() {
 }
 
 function getForecast (city){
-    // var queryURL = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+ city + "&appid=" + APIKey;
-    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=5&appid=" + APIKey + "&units=imperial"
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=5&appid=" + APIKey + "&units=imperial"
     console.log(queryURL)
     $.ajax({
         url: queryURL,
@@ -33,7 +32,7 @@ function getForecast (city){
         
         .then(function(forecastData){
             console.log(forecastData);
-            // not working yet
+            
             for (var j = 0; j < 5; j++){
                 var farenTemp = Math.floor((forecastData.list[j].main.temp));
                 var fiveDayDate = moment().add(j + 1, "day").format("MMMM Do YYYY");
@@ -67,7 +66,7 @@ $.ajax({
         var feelsLike = Math.floor((weatherData.main.feels_like - 273.15) * 1.8 + 32);
         var imgIcon = $('<img>');
         imgIcon.attr('class', 'image');
-        imgIcon.attr('src', 'http://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png');
+        imgIcon.attr('src', 'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png');
 
         currentWeather.empty();
         $('#icon').empty();
@@ -84,7 +83,7 @@ $.ajax({
         var lon = weatherData.coord.lon;
 
         //Adds the UV Index to current weather
-        var queryURL2 = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + lon;
+        var queryURL2 = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + lon;
         $.ajax({
             url: queryURL2,
             method: "GET"
@@ -92,10 +91,27 @@ $.ajax({
             // We store all of the retrieved data inside of an object called "response"
             .then(function(moreData) {
                 console.log(moreData);
-                $('<h3>').text("UV Index: " + moreData.value).appendTo(currentWeather);
-                getForecast(cityInput);
+                $('<h3 id = ' + city + '>').text("UV Index: " + moreData.value).appendTo(currentWeather);
+
+                if (moreData.value <= 2) {
+                    $('#' + city).addClass('green');
+                }
+                else if (moreData.value <= 5) {
+                    $('#' + city).addClass('yellow');
+                }
+                else if (moreData.value <= 7) {
+                    $('#' + city).addClass('orange');
+                } 
+                else if (moreData.value <= 10) {
+                    $('#' + city).addClass('red');
+                } 
+                else if (moreData.value > 10) {
+                    $('#' + city).addClass('purple');
+                } 
+    
             });
-        
+            
+            getForecast(cityInput);
 
     });
 
@@ -121,7 +137,7 @@ submitCity.on("click", function(event) {
 
     cityHistory.prepend(newDiv);
 
-
+    $('#cityInput').val("");
     getCurrentWeather();
 });
 
