@@ -65,10 +65,14 @@ $.ajax({
         console.log(weatherData);
         var farenTemp = Math.floor((weatherData.main.temp - 273.15) * 1.8 + 32);
         var feelsLike = Math.floor((weatherData.main.feels_like - 273.15) * 1.8 + 32);
+        var imgIcon = $('<img>');
+        imgIcon.attr('class', 'image');
+        imgIcon.attr('src', 'http://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png');
 
         currentWeather.empty();
+        $('#icon').empty();
         
-
+        $('#icon').append(imgIcon);
         $('<h3>').text("City: " + weatherData.name).appendTo(currentWeather)
         $('<h3>').text("Date: " + momentTime).appendTo(currentWeather)
         $('<h3>').text("Current Temperature (F): " + farenTemp).appendTo(currentWeather)
