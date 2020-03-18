@@ -139,6 +139,7 @@ $.ajax({
 
 };
 
+// adds city input to search history and runs current weather function
 submitCity.on("click", function(event) {
     event.preventDefault();
     var newDiv = $("<div>");
@@ -156,7 +157,6 @@ submitCity.on("click", function(event) {
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 
 
-    // cityHistory.prepend(newDiv);
     newDiv.prependTo(cityHistory)
 
     
@@ -165,11 +165,13 @@ submitCity.on("click", function(event) {
     $('#cityInput').val("");
 });
 
+// using attributes to run current weather function on each city in search history when clicked
 $(document).on("click", ".saved-city", function(){
     var city = $(this).attr("data-city")
     getCurrentWeather(city);
 })
 
+// presents search history on page load
 $( document ).ready(function() {
     loadHistory();
 
