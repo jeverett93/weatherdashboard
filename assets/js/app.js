@@ -38,7 +38,6 @@ function getForecast(city) {
         .then(function (forecastData) {
 
             fiveDay.empty();
-            console.log(forecastData);
             for (var j = 0; j < forecastData.list.length; j++) {
                 if (forecastData.list[j].dt_txt.indexOf("00:00:00") !== -1) {
                     var farenTemp = Math.floor((forecastData.list[j].main.temp));
@@ -56,7 +55,6 @@ function getForecast(city) {
                     $('<p class="card-text">').text("Temperature (F): " + farenTemp).appendTo(cardBody);
                     $('<p class="card-text">').text("Humidity: " + forecastData.list[j].main.humidity + " %").appendTo(cardBody);
 
-                    console.log(forecastData.list[j].dt_txt)
                     card.append(cardBody);
 
                     fiveDay.append(card);

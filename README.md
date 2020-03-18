@@ -8,7 +8,7 @@ This is a weather dashboard that allows a user to search for a city and get curr
 # Contributors: jeverett93.github.io
 
 # Technology Stack: 
-HTML5, CSS, Javascript, jQuery, Moment.js
+HTML5, CSS, Javascript, jQuery, Moment.js, AJAX
 
 # Contact: 
 josheverett93@gmail.com 
