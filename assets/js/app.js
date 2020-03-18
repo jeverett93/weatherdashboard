@@ -18,6 +18,7 @@ function loadHistory() {
     for (var i = 0; i < searchHistory.length; i++) {
         var historyDivs = $('<div>');
         historyDivs.text(searchHistory[i]);
+        historyDivs.addClass('list-group-item');
         historyDivs.attr("data-city", searchHistory[i]);
         historyDivs.addClass("saved-city");
         historyDivs.appendTo(cityHistory);
@@ -145,6 +146,7 @@ submitCity.on("click", function(event) {
     newDiv.text(cityInput);
     newDiv.attr("data-city", cityInput);
     newDiv.addClass("saved-city");
+    newDiv.addClass('list-group-item')
 
     
 
@@ -154,7 +156,8 @@ submitCity.on("click", function(event) {
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 
 
-    cityHistory.prepend(newDiv);
+    // cityHistory.prepend(newDiv);
+    newDiv.prependTo(cityHistory)
 
     
     getCurrentWeather();
