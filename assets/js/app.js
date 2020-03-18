@@ -32,7 +32,6 @@ function getForecast (city){
       })
         
         .then(function(forecastData){
-            console.log(forecastData);
 
             fiveDay.empty();
             

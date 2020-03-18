@@ -1,3 +1,7 @@
+.mb-3, 
+.card-body {
+    background-color: rgb(0, 162, 255) !important;
+}
 .green {
     color: green;
 }
