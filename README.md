@@ -10,7 +10,7 @@ This is a weather dashboard that allows a user to search for a city and get curr
 # Contributors: jeverett93.github.io
 
 # Technology Stack: 
-HTML5, CSS, Javascript, jQuery, Moment.js, AJAX
+HTML5, CSS, Javascript, jQuery, Moment.js, AJAX call to OpenWeather Map API
 
 # Contact: 
 josheverett93@gmail.com 
@@ -20,7 +20,11 @@ https://www.linkedin.com/in/joshua-everett-087a4649/
 https://github.com/jeverett93
 
 # Usage: 
-For travelers to see the weather outlook for multiple cities so that they can plan a trip accordingly. 
+```
+AS A traveler
+I WANT to see the weather outlook for multiple cities
+SO THAT I can plan a trip accordingly
+``` 
 
 # Credits: 
 www.w3schools.com
